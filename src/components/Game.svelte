@@ -10,7 +10,6 @@
     export let possition = -1;
 
     let prevValueLength = -1;
-
     let firstErrorIndex = 1000;
 
     function doMagic(value) {
@@ -28,21 +27,22 @@
             return;
         }
 
-        console.log("newPossition", newPossition);
-        console.log("letters", letters[newPossition]);
-        console.log("value", value[value.length - 1]);
-        // const newLetters = [...letters]
+        // console.log("newPossition", newPossition);
+        // console.log("letters", letters[newPossition]);
+        // console.log("value", value[value.length - 1]);
 
         if (newPossition < possition) {
             letters[newPossition + 1].state = DEFAULT_STATE;
             firstErrorIndex =
                 firstErrorIndex === newPossition + 1 ? 1000 : firstErrorIndex;
         } else if (letters[newPossition].word === value) {
-            // console.log("word match");
-            letters[newPossition].state = VALID_STATE;
             inputValue = "";
             prevValueLength = 0;
             firstErrorIndex = 1000;
+
+            [...value].forEach((_, index) => {
+                letters[newPossition - index].state = VALID_STATE;
+            });
         } else if (firstErrorIndex < newPossition) {
             letters[newPossition].state = ERROR_STATE;
         } else if (letters[newPossition].value === value[value.length - 1]) {
@@ -57,12 +57,17 @@
     }
 
     let inputValue = "";
-    // $: possition = inputValue.length;
     $: doMagic(inputValue);
+
+    let isGameActive = false;
+
+    function focusInput(input) {
+        input.focus();
+    }
 </script>
 
 <style>
-    .game__text__letter{
+    .game__text__letter {
         border-left: 1px solid transparent;
     }
     .game__text__letter--default {
@@ -109,6 +114,7 @@
         background: #3a3939;
         color: #ff3e00;
         width: 100%;
+        font-weight: bold;
     }
     .game__controls__button:hover {
         background: #353535;
@@ -126,7 +132,17 @@
     </div>
 
     <div class="game__controls">
-        <input class="game__controls__input" bind:value={inputValue} />
-        <!-- <button class="game__controls__button">start</button> -->
+        {#if isGameActive}
+            <input
+                class="game__controls__input"
+                bind:value={inputValue}
+                use:focusInput />
+        {/if}
+
+        {#if !isGameActive}
+            <button
+                class="game__controls__button"
+                on:click={() => (isGameActive = true)}>START</button>
+        {/if}
     </div>
 </div>
