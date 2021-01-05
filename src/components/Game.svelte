@@ -62,37 +62,76 @@
 </script>
 
 <style>
-    .letter--default {
+    .game__text__letter--default {
         background-color: transparent;
         color: gray;
     }
-    .letter--valid {
+    .game__text__letter--valid {
         background-color: transparent;
     }
-    .letter--error {
+    .game__text__letter--error {
         background-color: #920000;
     }
-    .letter--cursor {
+    .game__text__letter--cursor {
         background-color: transparent;
         position: relative;
         color: gray;
     }
-    .letter--cursor::before {
+    .game__text__letter--cursor::before {
         content: "";
         background-color: #26ffd7;
         width: 1px;
-        height: 100%;
+        height: 1.2em;
         position: absolute;
         left: 0;
         top: 0;
     }
+
+    .game {
+        padding: 1rem;
+        background-color: #2f2f2f;
+    }
+    .game__text {
+        text-align: left;
+        font-size: 20px;
+    }
+    .game__controls {
+        text-align: center;
+        margin-top: 1rem;
+    }
+    .game__controls__input {
+        margin: 0;
+        outline: none;
+        border: none;
+        background-color: #3a3939;
+        color: white;
+        width: 100%;
+    }
+
+    .game__controls__button {
+        margin: 0;
+        border: none;
+        background: #3a3939;
+        color: #ff3e00;
+        width: 100%;
+    }
+    .game__controls__button:hover {
+        background: #353535;
+    }
 </style>
 
-<div>
-    {#each letters as letter, index}
-        <span
-            class={`letter letter--${index === possition + 1 ? CURSOR_STATE : letter.state}`}>{letter.value}</span>
-    {/each}
-    <div><input bind:value={inputValue} /></div>
-    {possition}
+<div class="game">
+    <!-- {possition} -->
+
+    <div class="game__text">
+        {#each letters as letter, index}
+            <span
+                class={`game__text__letter game__text__letter--${index === possition + 1 ? CURSOR_STATE : letter.state}`}>{letter.value}</span>
+        {/each}
+    </div>
+
+    <div class="game__controls">
+        <input class="game__controls__input" bind:value={inputValue} />
+        <!-- <button class="game__controls__button">start</button> -->
+    </div>
 </div>
