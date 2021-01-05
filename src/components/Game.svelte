@@ -62,6 +62,9 @@
 </script>
 
 <style>
+    .game__text__letter{
+        border-left: 1px solid transparent;
+    }
     .game__text__letter--default {
         background-color: transparent;
         color: gray;
@@ -76,15 +79,7 @@
         background-color: transparent;
         position: relative;
         color: gray;
-    }
-    .game__text__letter--cursor::before {
-        content: "";
-        background-color: #26ffd7;
-        width: 1px;
-        height: 1.2em;
-        position: absolute;
-        left: 0;
-        top: 0;
+        border-left: 1px solid #26ffd7;
     }
 
     .game {
