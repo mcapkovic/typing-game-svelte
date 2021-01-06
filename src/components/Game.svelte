@@ -4,10 +4,17 @@
         ERROR_STATE,
         VALID_STATE,
         CURSOR_STATE,
+        GAME_ACTIVE,
+        GAME_INACTIVE,
+        GAME_FINISHED,
+        GAME_TIMEOUT,
     } from "../constants";
+    import Countdown from "./Countdown.svelte";
 
     export let letters = [];
     export let possition = -1;
+
+    let gameStatus = GAME_INACTIVE;
 
     let prevValueLength = -1;
     let firstErrorIndex = 1000;
@@ -59,8 +66,8 @@
     let inputValue = "";
     $: doMagic(inputValue);
 
-    let isGameActive = false;
-
+    $: if (possition === letters.length - 1 && firstErrorIndex === 1000)
+        gameStatus = GAME_FINISHED;
     function focusInput(input) {
         input.focus();
     }
@@ -112,18 +119,18 @@
         margin: 0;
         border: none;
         background: #3a3939;
-        color: #ff3e00;
+        color: #e6e6e6;
         width: 100%;
         font-weight: bold;
+        cursor: pointer;
     }
     .game__controls__button:hover {
         background: #353535;
+        color: white;
     }
 </style>
 
 <div class="game">
-    <!-- {possition} -->
-
     <div class="game__text">
         {#each letters as letter, index}
             <span
@@ -132,17 +139,21 @@
     </div>
 
     <div class="game__controls">
-        {#if isGameActive}
+        {#if gameStatus === GAME_ACTIVE}
             <input
                 class="game__controls__input"
                 bind:value={inputValue}
                 use:focusInput />
         {/if}
 
-        {#if !isGameActive}
+        {#if gameStatus === GAME_INACTIVE}
             <button
                 class="game__controls__button"
-                on:click={() => (isGameActive = true)}>START</button>
+                on:click={() => (gameStatus = GAME_TIMEOUT)}>START</button>
+        {/if}
+
+        {#if gameStatus === GAME_TIMEOUT}
+            <Countdown bind:gameStatus />
         {/if}
     </div>
 </div>
