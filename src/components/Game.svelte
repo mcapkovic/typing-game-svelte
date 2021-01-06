@@ -15,11 +15,11 @@
     export let possition = -1;
 
     let gameStatus = GAME_INACTIVE;
-
+    let inputValue = "";
     let prevValueLength = -1;
-    let firstErrorIndex = 1000;
+    let firstErrorIndex = Number.MAX_VALUE;
 
-    function doMagic(value) {
+    function textValidation(value) {
         if (prevValueLength === -1 && value.length === 0) return;
         if (letters.length < possition) return;
 
@@ -34,18 +34,14 @@
             return;
         }
 
-        // console.log("newPossition", newPossition);
-        // console.log("letters", letters[newPossition]);
-        // console.log("value", value[value.length - 1]);
-
         if (newPossition < possition) {
             letters[newPossition + 1].state = DEFAULT_STATE;
             firstErrorIndex =
-                firstErrorIndex === newPossition + 1 ? 1000 : firstErrorIndex;
+                firstErrorIndex === newPossition + 1 ? Number.MAX_VALUE : firstErrorIndex;
         } else if (letters[newPossition].word === value) {
             inputValue = "";
             prevValueLength = 0;
-            firstErrorIndex = 1000;
+            firstErrorIndex = Number.MAX_VALUE;
 
             [...value].forEach((_, index) => {
                 letters[newPossition - index].state = VALID_STATE;
@@ -59,15 +55,14 @@
                 firstErrorIndex < newPossition ? firstErrorIndex : newPossition;
             letters[newPossition].state = ERROR_STATE;
         }
-        // letters=newLetters
         possition = newPossition;
     }
 
-    let inputValue = "";
-    $: doMagic(inputValue);
+    $: textValidation(inputValue);
 
-    $: if (possition === letters.length - 1 && firstErrorIndex === 1000)
+    $: if (possition === letters.length - 1 && firstErrorIndex === Number.MAX_VALUE)
         gameStatus = GAME_FINISHED;
+        
     function focusInput(input) {
         input.focus();
     }
@@ -96,19 +91,18 @@
     }
 
     @keyframes cursor-animation {
-        0%  {
+        0% {
             border-left-color: #26ffd7;
         }
-        40%  {
+        40% {
             border-left-color: #26ffd7;
         }
-        60%  {
+        60% {
             border-left-color: transparent;
         }
-        100%  {
+        100% {
             border-left-color: transparent;
         }
-
     }
 
     .game {

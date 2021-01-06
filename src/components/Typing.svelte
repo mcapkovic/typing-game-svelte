@@ -1,12 +1,13 @@
 <script>
     import Game from "./Game.svelte";
     import { DEFAULT_STATE } from "../constants";
+    import { paragraphs } from "../text";
 
     const initialText =
-        "this industry would become extinct if something were to happen to sever the connection between external expressions and the internal nature of men and women.";
+        paragraphs[Math.floor(Math.random() * paragraphs.length)];
     let letters = [];
     let possition = -1;
-    
+
     initialText.split(" ").forEach((word) => {
         [...word].forEach((letter, index) => {
             letters.push({
@@ -23,9 +24,8 @@
         });
     });
 
-    // console.log(letters);
 </script>
 
 <div>
-    <Game bind:letters={letters}  bind:possition={possition} />
+    <Game bind:letters bind:possition />
 </div>
