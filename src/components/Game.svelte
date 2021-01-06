@@ -92,6 +92,23 @@
         position: relative;
         color: gray;
         border-left: 1px solid #26ffd7;
+        animation: 700ms linear infinite alternate cursor-animation;
+    }
+
+    @keyframes cursor-animation {
+        0%  {
+            border-left-color: #26ffd7;
+        }
+        40%  {
+            border-left-color: #26ffd7;
+        }
+        60%  {
+            border-left-color: transparent;
+        }
+        100%  {
+            border-left-color: transparent;
+        }
+
     }
 
     .game {
