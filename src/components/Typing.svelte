@@ -33,7 +33,7 @@
   <Game bind:letters bind:possition bind:correctWords />
   <div class="typing__stats">
     <WPM className="typing__stats__tile" {correctWords} />
-    <!-- <div class='typing__stats__spacer' /> -->
+    <div class="typing__stats__spacer" />
     <CPM
       className="typing__stats__tile"
       noOfCharacters={letters.length}
@@ -48,21 +48,17 @@
 } */
   .typing__stats {
     display: flex;
-    justify-content: space-between;
-
   }
-
   :global(.typing__stats__tile) {
     color: red;
-    /* flex-grow: 1; */
+    flex: 1 1 0px;
     padding: 1em 0;
     margin: 0.5em 0;
     background-color: #2f2f2f;
     color: gray;
-    width: 49%;
   }
 
-  /* .typing__stats__spacer{
-      width: 0.5em;
-  } */
+  .typing__stats__spacer {
+    width: 0.5em;
+  }
 </style>
