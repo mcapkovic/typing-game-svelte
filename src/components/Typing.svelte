@@ -2,6 +2,7 @@
   import Game from "./Game.svelte";
   import WPM from "./WPM.svelte";
   import CPM from "./CPM.svelte";
+  import Checkbox from "./Checkbox.svelte";
 
   import { DEFAULT_STATE } from "../constants";
   import { paragraphs } from "../text";
@@ -10,26 +11,48 @@
   let letters = [];
   let possition = -1;
   let correctWords = 0;
+  let forceLowerCase = false;
+  let words;
 
-  const words = initialText.split(" ");
-  words.forEach((word) => {
-    [...word].forEach((letter, index) => {
+  function generateContent() {
+    letters = [];
+    words.forEach((word) => {
+      [...word].forEach((letter, index) => {
+        letters.push({
+          value: letter,
+          word,
+          position: index,
+          state: DEFAULT_STATE,
+        });
+      });
       letters.push({
-        value: letter,
-        word,
-        position: index,
+        value: " ",
+        word: " ",
         state: DEFAULT_STATE,
       });
     });
-    letters.push({
-      value: " ",
-      word: " ",
-      state: DEFAULT_STATE,
-    });
-  });
+  }
+
+  $: if (forceLowerCase) {
+    words = [];
+    words = initialText.toLowerCase().split(" ");
+    generateContent();
+  } else {
+    words = [];
+    words = initialText.split(" ");
+    generateContent();
+  }
 </script>
 
 <div class="typing">
+  <div class="typing__settings">
+    <Checkbox
+      id="lowerCase"
+      label="only lower case"
+      bind:checked={forceLowerCase}
+      disabled={possition !== -1}
+    />
+  </div>
   <Game bind:letters bind:possition bind:correctWords />
   <div class="typing__stats">
     <WPM className="typing__stats__tile" {correctWords} />
@@ -46,6 +69,10 @@
   /* .typing{
     
 } */
+
+.typing__settings{
+    margin-bottom: 1em;
+}
   .typing__stats {
     display: flex;
   }
