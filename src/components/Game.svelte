@@ -20,12 +20,15 @@
   let prevValueLength = -1;
   let firstErrorIndex = Number.MAX_VALUE;
 
+  // TODO: refactor this mess
   function textValidation(value) {
     if (prevValueLength === -1 && value.length === 0) return;
     if (letters.length < possition) return;
 
     let newPossition =
       prevValueLength > value.length ? possition - 1 : possition + 1;
+
+    if (letters.length <= newPossition) return;
 
     prevValueLength = value.length;
 

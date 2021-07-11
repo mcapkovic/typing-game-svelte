@@ -15,3 +15,8 @@ export const paragraphs = [
   `Cake or pie? I can tell a lot about you by which one you pick. It may seem silly, but cake people and pie people are really different. I know which one I hope you are, but that's not for me to decide. So, what is it? Cake or pie?`,
   `It wasn't quite yet time to panic. There was still time to salvage the situation. At least that is what she was telling himself. The reality was that it was time to panic and there wasn't time to salvage the situation, but he continued to delude himself into believing there was.`,
 ];
+
+// export const paragraphs = [
+//   `ab`
+// ];
+
