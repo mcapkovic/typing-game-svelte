@@ -32,14 +32,14 @@
   }
 
   const initialText = paragraphs[Math.floor(Math.random() * paragraphs.length)];
-  let letters = [];
+  let characters = [];
   let possition = -1;
   let correctWords = 0;
   let forceLowerCase = false;
   let words;
 
   function generateContent() {
-    letters = getCharacters(words);
+    characters = getCharacters(words);
   }
 
   $: if (forceLowerCase) {
@@ -62,13 +62,13 @@
       disabled={possition !== -1}
     />
   </div>
-  <Game bind:letters bind:possition bind:correctWords />
+  <Game bind:letters={characters} bind:possition bind:correctWords />
   <div class="typing__stats">
     <WPM className="typing__stats__tile" {correctWords} />
     <div class="typing__stats__spacer" />
     <CPM
       className="typing__stats__tile"
-      noOfCharacters={letters.length}
+      noOfCharacters={characters.length}
       position={possition}
     />
   </div>
