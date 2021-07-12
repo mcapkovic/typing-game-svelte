@@ -7,39 +7,48 @@
   import { DEFAULT_STATE } from "../constants";
   import { paragraphs } from "../text";
 
-  const initialText = paragraphs[Math.floor(Math.random() * paragraphs.length)];
-  let letters = [];
-  let possition = -1;
-  let correctWords = 0;
-  let forceLowerCase = false;
-  let words;
-
-  function generateContent() {
-    letters = [];
-    words.forEach((word) => {
+  function getCharacters(words) {
+    const characters = [];
+    words.forEach((word, wordIndex) => {
+      // get character data
       [...word].forEach((letter, index) => {
-        letters.push({
+        characters.push({
           value: letter,
           word,
           position: index,
           state: DEFAULT_STATE,
         });
       });
-      letters.push({
-        value: " ",
-        word: " ",
-        state: DEFAULT_STATE,
-      });
+
+      // add space between words
+      if (wordIndex < words.length - 1)
+        characters.push({
+          value: " ",
+          word: " ",
+          state: DEFAULT_STATE,
+        });
     });
+    return characters;
+  }
+
+  const initialText = paragraphs[Math.floor(Math.random() * paragraphs.length)];
+  let characters = [];
+  let possition = -1;
+  let correctWords = 0;
+  let forceLowerCase = false;
+  let words;
+
+  function generateContent() {
+    characters = getCharacters(words);
   }
 
   $: if (forceLowerCase) {
     words = [];
-    words = initialText.toLowerCase().split(" ");
+    words = initialText.toLowerCase().trim().split(" ");
     generateContent();
   } else {
     words = [];
-    words = initialText.split(" ");
+    words = initialText.trim().split(" ");
     generateContent();
   }
 </script>
@@ -53,13 +62,13 @@
       disabled={possition !== -1}
     />
   </div>
-  <Game bind:letters bind:possition bind:correctWords />
+  <Game bind:letters={characters} bind:possition bind:correctWords />
   <div class="typing__stats">
     <WPM className="typing__stats__tile" {correctWords} />
     <div class="typing__stats__spacer" />
     <CPM
       className="typing__stats__tile"
-      noOfCharacters={letters.length}
+      noOfCharacters={characters.length}
       position={possition}
     />
   </div>
@@ -70,9 +79,9 @@
     
 } */
 
-.typing__settings{
+  .typing__settings {
     margin-bottom: 1em;
-}
+  }
   .typing__stats {
     display: flex;
   }
