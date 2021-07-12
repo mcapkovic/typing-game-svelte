@@ -25,21 +25,16 @@
           state: DEFAULT_STATE,
         });
       });
-      letters.push({
-        value: " ",
-        word: " ",
-        state: DEFAULT_STATE,
-      });
     });
   }
 
   $: if (forceLowerCase) {
     words = [];
-    words = initialText.toLowerCase().split(" ");
+    words = initialText.toLowerCase().split("");
     generateContent();
   } else {
     words = [];
-    words = initialText.split(" ");
+    words = initialText.split("");
     generateContent();
   }
 </script>
@@ -70,9 +65,9 @@
     
 } */
 
-.typing__settings{
+  .typing__settings {
     margin-bottom: 1em;
-}
+  }
   .typing__stats {
     display: flex;
   }
