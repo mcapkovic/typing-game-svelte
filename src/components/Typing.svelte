@@ -44,11 +44,11 @@
 
   $: if (forceLowerCase) {
     words = [];
-    words = initialText.toLowerCase().split(" ");
+    words = initialText.toLowerCase().trim().split(" ");
     generateContent();
   } else {
     words = [];
-    words = initialText.split(" ");
+    words = initialText.trim().split(" ");
     generateContent();
   }
 </script>
