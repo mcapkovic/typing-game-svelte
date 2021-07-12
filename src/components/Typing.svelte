@@ -7,18 +7,12 @@
   import { DEFAULT_STATE } from "../constants";
   import { paragraphs } from "../text";
 
-  const initialText = paragraphs[Math.floor(Math.random() * paragraphs.length)];
-  let letters = [];
-  let possition = -1;
-  let correctWords = 0;
-  let forceLowerCase = false;
-  let words;
-
-  function generateContent() {
-    letters = [];
+  function getCharacters(words) {
+    const characters = [];
     words.forEach((word, wordIndex) => {
+      // get character data
       [...word].forEach((letter, index) => {
-        letters.push({
+        characters.push({
           value: letter,
           word,
           position: index,
@@ -28,12 +22,24 @@
 
       // add space between words
       if (wordIndex < words.length - 1)
-        letters.push({
+        characters.push({
           value: " ",
           word: " ",
           state: DEFAULT_STATE,
         });
     });
+    return characters;
+  }
+
+  const initialText = paragraphs[Math.floor(Math.random() * paragraphs.length)];
+  let letters = [];
+  let possition = -1;
+  let correctWords = 0;
+  let forceLowerCase = false;
+  let words;
+
+  function generateContent() {
+    letters = getCharacters(words);
   }
 
   $: if (forceLowerCase) {
