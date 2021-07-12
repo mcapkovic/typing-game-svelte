@@ -16,7 +16,7 @@
 
   function generateContent() {
     letters = [];
-    words.forEach((word) => {
+    words.forEach((word, wordIndex) => {
       [...word].forEach((letter, index) => {
         letters.push({
           value: letter,
@@ -25,11 +25,14 @@
           state: DEFAULT_STATE,
         });
       });
-      letters.push({
-        value: " ",
-        word: " ",
-        state: DEFAULT_STATE,
-      });
+
+      // add space between words
+      if (wordIndex < words.length - 1)
+        letters.push({
+          value: " ",
+          word: " ",
+          state: DEFAULT_STATE,
+        });
     });
   }
 
@@ -70,9 +73,9 @@
     
 } */
 
-.typing__settings{
+  .typing__settings {
     margin-bottom: 1em;
-}
+  }
   .typing__stats {
     display: flex;
   }
